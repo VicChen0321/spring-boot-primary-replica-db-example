@@ -1,6 +1,7 @@
 package com.example.dbexample.config;
 
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Configuration
+@Slf4j
 public class DataSourceConfig {
 
     @Bean
@@ -102,15 +104,19 @@ public class DataSourceConfig {
             String lookupKey = ReplicationContextHolder.getContext();
             
             if ("WRITE".equals(lookupKey)) {
+                log.info("🔵 路由決策: WRITE → Primary Database (MASTER:5432)");
                 return ReplicationType.MASTER;
             } else if ("READ".equals(lookupKey)) {
                 // 隨機選擇一個 replica
                 ReplicationType replica = REPLICA_TYPES.get(
                         ThreadLocalRandom.current().nextInt(REPLICA_TYPES.size())
                 );
+                String dbPort = replica == ReplicationType.SLAVE1 ? "5433" : "5434";
+                log.info("🟢 路由決策: READ → {} (Port: {})", replica, dbPort);
                 return replica;
             }
             
+            log.warn("⚠️  未指定操作類型，默認使用 Primary Database");
             return ReplicationType.MASTER;
         }
     }

@@ -58,3 +58,15 @@ run-local:
 test:
 	./gradlew test
 
+# 測試讀寫分離
+test-rw:
+	./test-rw-splitting.sh
+
+# 測試 API
+test-api:
+	./test-api.sh
+
+# 查看實時日誌（路由決策）
+watch-logs:
+	docker-compose logs -f app | grep -E "(路由決策|AOP 檢測)"
+

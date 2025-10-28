@@ -53,6 +53,9 @@ management:
 
 logging:
   level:
+    root: INFO
     com.example.dbexample: DEBUG
+    com.example.dbexample.config: INFO
     org.springframework.r2dbc: DEBUG
+    org.hibernate: INFO
 
