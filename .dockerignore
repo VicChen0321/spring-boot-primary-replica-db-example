@@ -1,0 +1,12 @@
+.gradle
+build
+!build/libs
+src/test
+*.md
+.git
+.gitignore
+.idea
+*.iml
+.vscode
+.DS_Store
+

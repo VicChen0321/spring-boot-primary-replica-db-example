@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  postgres-primary:
+    image: postgres:latest
+    container_name: postgres-primary
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - primary_data:/var/lib/postgresql/data
+      - ./init-scripts/primary-init.sh:/docker-entrypoint-initdb.d/primary-init.sh
+    networks:
+      - db_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  postgres-replica1:
+    image: postgres:latest
+    container_name: postgres-replica1
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+      POSTGRES_DB: mydb
+    ports:
+      - "5433:5432"
+    volumes:
+      - replica1_data:/var/lib/postgresql/data
+      - ./init-scripts/primary-init.sh:/docker-entrypoint-initdb.d/primary-init.sh
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+    networks:
+      - db_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  postgres-replica2:
+    image: postgres:latest
+    container_name: postgres-replica2
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+      POSTGRES_DB: mydb
+    ports:
+      - "5434:5432"
+    volumes:
+      - replica2_data:/var/lib/postgresql/data
+      - ./init-scripts/primary-init.sh:/docker-entrypoint-initdb.d/primary-init.sh
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+    networks:
+      - db_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-boot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-primary
+      - postgres-replica1
+      - postgres-replica2
+    environment:
+      SPRING_DATASOURCE_PRIMARY_JDBC_URL: jdbc:postgresql://postgres-primary:5432/mydb
+      SPRING_DATASOURCE_REPLICA1_JDBC_URL: jdbc:postgresql://postgres-replica1:5432/mydb
+      SPRING_DATASOURCE_REPLICA2_JDBC_URL: jdbc:postgresql://postgres-replica2:5432/mydb
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypass
+    networks:
+      - db_network
+    restart: unless-stopped
+
+volumes:
+  primary_data:
+  replica1_data:
+  replica2_data:
+
+networks:
+  db_network:
+    driver: bridge

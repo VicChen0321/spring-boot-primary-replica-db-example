@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: spring-boot-primary-replica-db
+  datasource:
+    primary:
+      jdbc-url: jdbc:postgresql://localhost:5432/mydb
+      username: myuser
+      password: mypass
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        pool-name: PrimaryHikariPool
+        maximum-pool-size: 10
+        minimum-idle: 5
+    replica1:
+      jdbc-url: jdbc:postgresql://localhost:5433/mydb
+      username: myuser
+      password: mypass
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        pool-name: Replica1HikariPool
+        maximum-pool-size: 10
+        minimum-idle: 5
+    replica2:
+      jdbc-url: jdbc:postgresql://localhost:5434/mydb
+      username: myuser
+      password: mypass
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        pool-name: Replica2HikariPool
+        maximum-pool-size: 10
+        minimum-idle: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.example.dbexample: DEBUG
+    org.springframework.r2dbc: DEBUG
+
