@@ -16,24 +16,34 @@
 
 ```
 spring-boot-primary-replica-db-example/
+├── docs/                             # 文檔目錄
+│   ├── ARCHITECTURE.md               # 系統架構說明
+│   ├── CHANGELOG.md                  # 更新日誌
+│   ├── HELP.md                       # 使用幫助
+│   ├── QUICKSTART.md                 # 快速開始
+│   ├── READ-WRITE-SPLITTING-COMPARISON.md  # 讀寫分離方案對比
+│   ├── SUMMARY.md                    # 完成總結
+│   └── TESTING.md                    # 測試指南
+├── init-scripts/                     # PostgreSQL 初始化腳本
+│   └── primary-init.sh
 ├── src/
 │   ├── main/
-│   │   ├── java/
-│   │   │   └── com/example/dbexample/
-│   │   │       ├── config/          # 數據源配置（讀寫分離核心）
-│   │   │       ├── controller/      # REST API
-│   │   │       ├── model/           # 實體類
-│   │   │       ├── repository/      # 數據訪問層
-│   │   │       └── service/         # 業務邏輯層
+│   │   ├── java/com/example/dbexample/
+│   │   │   ├── config/              # 數據源配置（讀寫分離核心）
+│   │   │   ├── controller/          # REST API
+│   │   │   ├── model/               # 實體類
+│   │   │   ├── repository/          # 數據訪問層
+│   │   │   └── service/             # 業務邏輯層
 │   │   └── resources/
 │   │       └── application.yml      # 應用配置
-├── init-scripts/                     # PostgreSQL 初始化腳本
+│   └── test/                         # 測試代碼
 ├── build.gradle.kts                  # Gradle 配置
-├── Dockerfile                        # Docker 構建文件
 ├── docker-compose.yml                # Docker Compose 配置
-└── 測試腳本/
-    ├── test-api.sh                  # 基礎 API 測試
-    └── test-rw-splitting.sh         # 讀寫分離完整測試
+├── Dockerfile                        # Docker 構建文件
+├── Makefile                          # 便捷命令
+├── README.md                         # 項目說明
+├── test-api.sh                       # 基礎 API 測試
+└── test-rw-splitting.sh              # 讀寫分離完整測試
 ```
 
 ## 快速開始
@@ -165,7 +175,7 @@ make watch-logs
 curl http://localhost:8080/api/users
 ```
 
-詳細測試指南請參考 [TESTING.md](TESTING.md)
+詳細測試指南請參考 [docs/TESTING.md](docs/TESTING.md)
 
 ## 常用命令
 
@@ -201,12 +211,13 @@ make shell-app          # 進入應用容器
 ## 文檔索引
 
 - [README.md](README.md) - 項目總覽（本文件）
-- [QUICKSTART.md](QUICKSTART.md) - 快速開始指南
-- [TESTING.md](TESTING.md) - 詳細測試指南
-- [ARCHITECTURE.md](ARCHITECTURE.md) - 系統架構說明
-- [CHANGELOG.md](CHANGELOG.md) - 更新日誌
-- [READ-WRITE-SPLITTING-COMPARISON.md](READ-WRITE-SPLITTING-COMPARISON.md) - 讀寫分離方案對比
-- [HELP.md](HELP.md) - 使用幫助
+- [docs/QUICKSTART.md](docs/QUICKSTART.md) - 快速開始指南
+- [docs/TESTING.md](docs/TESTING.md) - 詳細測試指南
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - 系統架構說明
+- [docs/CHANGELOG.md](docs/CHANGELOG.md) - 更新日誌
+- [docs/READ-WRITE-SPLITTING-COMPARISON.md](docs/READ-WRITE-SPLITTING-COMPARISON.md) - 讀寫分離方案對比
+- [docs/HELP.md](docs/HELP.md) - 使用幫助
+- [docs/SUMMARY.md](docs/SUMMARY.md) - 完成總結
 
 ## 注意事項
 
@@ -343,7 +354,7 @@ MIT
 
 ## 更新記錄
 
-詳細更新記錄請參考 [CHANGELOG.md](CHANGELOG.md)
+詳細更新記錄請參考 [docs/CHANGELOG.md](docs/CHANGELOG.md)
 
 ### 最新更新
 

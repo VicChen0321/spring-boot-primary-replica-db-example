@@ -117,9 +117,9 @@ make watch-logs   # 實時查看路由決策日誌
 
 創建/更新以下文檔：
 - **README.md** - 完整的項目說明
-- **TESTING.md** - 詳細測試指南
-- **CHANGELOG.md** - 更新日誌
-- **SUMMARY.md** - 本總結文檔
+- **docs/TESTING.md** - 詳細測試指南
+- **docs/CHANGELOG.md** - 更新日誌
+- **docs/SUMMARY.md** - 本總結文檔
 
 ## 如何驗證
 
@@ -260,9 +260,9 @@ done
 
 ### 文檔
 10. ✅ `README.md`
-11. ✅ `TESTING.md`
-12. ✅ `CHANGELOG.md`
-13. ✅ `SUMMARY.md`
+11. ✅ `docs/TESTING.md`
+12. ✅ `docs/CHANGELOG.md`
+13. ✅ `docs/SUMMARY.md`
 
 ## 技術要點總結
 

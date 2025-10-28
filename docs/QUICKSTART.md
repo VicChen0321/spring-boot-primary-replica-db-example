@@ -184,9 +184,9 @@ make up
 
 ## 下一步
 
-- 查看 [README.md](README.md) 了解完整文檔
-- 查看 [ARCHITECTURE.md](ARCHITECTURE.md) 了解系統架構
-- 查看 [HELP.md](HELP.md) 了解詳細使用說明
+- 查看 [README.md](../README.md) 了解完整文檔
+- 查看 [docs/ARCHITECTURE.md](ARCHITECTURE.md) 了解系統架構
+- 查看 [docs/HELP.md](HELP.md) 了解詳細使用說明
 - 查看源代碼了解實現細節
 
 ## 技術支援
@@ -194,6 +194,6 @@ make up
 遇到問題？
 1. 查看日誌：`make logs`
 2. 檢查服務狀態：`make status`
-3. 查看幫助文檔：`HELP.md`
+3. 查看幫助文檔：`docs/HELP.md`
 4. 重新啟動：`make rebuild`
 
